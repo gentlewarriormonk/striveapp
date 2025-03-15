@@ -3,16 +3,12 @@ import { cn } from "@/lib/utils";
 
 interface StriveLogoProps {
   className?: string;
-  textClassName?: string;
   size?: "sm" | "md" | "lg";
-  withText?: boolean;
 }
 
 export const StriveLogo = ({ 
   className, 
-  textClassName,
-  size = "md",
-  withText = true 
+  size = "md" 
 }: StriveLogoProps) => {
   const getSizeClass = () => {
     switch (size) {
@@ -31,11 +27,6 @@ export const StriveLogo = ({
           className="h-full w-auto"
         />
       </div>
-      {withText && (
-        <span className={cn("text-2xl font-semibold ml-2 text-white tracking-wide", textClassName)}>
-          STRIVE
-        </span>
-      )}
     </div>
   );
 };
