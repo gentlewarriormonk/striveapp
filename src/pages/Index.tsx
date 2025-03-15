@@ -1,5 +1,5 @@
 
-import { StriveLogo } from "@/assets/strive-logo";
+import striveLogo from "@/assets/strive-logo.png";  // Make sure this matches your uploaded logo path
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
