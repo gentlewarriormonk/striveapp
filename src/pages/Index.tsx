@@ -1,5 +1,4 @@
 
-import striveLogo from "@/assets/strive-logo.png";  // Make sure this matches your uploaded logo path
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -19,10 +18,13 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#050a14] p-4">
       <div className="w-full max-w-md mx-auto">
         <div className="flex justify-center mb-8">
-          <img src={striveLogo} alt="Strive Logo" className="h-12 w-auto" />
+          <img 
+            src="/lovable-uploads/2bb76d87-cf5d-4b84-ba7e-4df4dc33f55d.png" 
+            alt="Strive Logo" 
+            className="h-12 w-auto" 
+          />
         </div>
 
-        
         <h1 className="text-4xl font-bold text-center text-white mb-3 tracking-tight">
           Welcome to Strive
         </h1>
