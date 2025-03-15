@@ -1,18 +1,40 @@
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BookOpen, Home, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
 import { useTheme } from "@/components/theme-provider";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 export const NavBar = () => {
   const location = useLocation();
   const { theme } = useTheme();
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
   
   const logoSrc = theme === "dark"
     ? "/lovable-uploads/strive logo white on transparent.png"
     : "/lovable-uploads/Strive full colour with padding.png";
+  
+  const handleLogout = async () => {
+    await signOut();
+    navigate("/");
+    toast.success("Logged out successfully");
+  };
+
+  const handleAddNewItem = () => {
+    // Determine which page to navigate to based on current location
+    if (location.pathname === "/habits") {
+      navigate("/habits/new");
+    } else if (location.pathname === "/tasks") {
+      navigate("/tasks/new");
+    } else {
+      // Default to tasks if on any other page
+      navigate("/tasks/new");
+    }
+  };
   
   return (
     <header className="w-full bg-strive-deep-navy border-b border-white/5">
@@ -69,7 +91,11 @@ export const NavBar = () => {
                 <Settings className="h-5 w-5 text-white/70 hover:text-white" />
               </Button>
               
-              <Button variant="outline" className="hidden md:flex items-center gap-2 text-white border-white/20 hover:bg-white/5">
+              <Button 
+                variant="outline" 
+                className="hidden md:flex items-center gap-2 text-white border-white/20 hover:bg-white/5"
+                onClick={handleLogout}
+              >
                 <LogOut className="h-4 w-4" />
                 Log Out
               </Button>
@@ -104,7 +130,11 @@ export const NavBar = () => {
           </NavLink>
           
           <div className="relative -mt-5">
-            <Button size="icon" className="h-14 w-14 rounded-full bg-strive-blue text-white hover:bg-strive-blue/90">
+            <Button 
+              size="icon" 
+              className="h-14 w-14 rounded-full bg-strive-blue text-white hover:bg-strive-blue/90"
+              onClick={handleAddNewItem}
+            >
               <PlusCircle className="h-7 w-7" />
             </Button>
           </div>

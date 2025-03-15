@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
 import Dashboard from "./pages/Dashboard";
@@ -12,6 +12,7 @@ import Tasks from "./pages/Tasks";
 import NotFound from "./pages/NotFound";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -39,9 +40,24 @@ const App = () => {
                 <Habits />
               </ProtectedRoute>
             } />
+            <Route path="/habits/new" element={
+              <ProtectedRoute>
+                <Habits />
+              </ProtectedRoute>
+            } />
             <Route path="/tasks" element={
               <ProtectedRoute>
                 <Tasks />
+              </ProtectedRoute>
+            } />
+            <Route path="/tasks/new" element={
+              <ProtectedRoute>
+                <Tasks />
+              </ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
