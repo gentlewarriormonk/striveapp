@@ -1,4 +1,5 @@
 
+import StriveLogo from "@/assets/strive-logo.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
@@ -19,7 +20,7 @@ const Index = () => {
       <div className="w-full max-w-md mx-auto">
         <div className="flex justify-center mb-8">
           <img 
-            src="/lovable-uploads/2bb76d87-cf5d-4b84-ba7e-4df4dc33f55d.png" 
+            src={StriveLogo} 
             alt="Strive Logo" 
             className="h-12 w-auto" 
           />
