@@ -1,23 +1,33 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Info, LogIn } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [role, setRole] = useState<string>("student");
   
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/dashboard");
+    }
+  }, [user, loading, navigate]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsSubmitting(true);
     
     try {
       if (isLogin) {
@@ -29,6 +39,7 @@ const Index = () => {
         
         if (error) throw error;
         console.log("Logged in:", data);
+        toast.success("Logged in successfully!");
         navigate("/dashboard");
       } else {
         // Sign up with email and password
@@ -37,29 +48,39 @@ const Index = () => {
           password,
           options: {
             data: {
-              name
+              name,
+              role
             }
           }
         });
         
         if (error) throw error;
-        toast.success("Sign up successful! Please check your email for verification.");
+        
+        if (data.user?.identities?.length === 0) {
+          toast.error("This email is already registered. Please log in instead.");
+        } else {
+          toast.success("Sign up successful! Please check your email for verification.");
+        }
       }
     } catch (error: any) {
       console.error("Authentication error:", error);
       toast.error(error.message || "Authentication failed");
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   const handleGoogleSignIn = async () => {
-    setLoading(true);
+    setIsSubmitting(true);
     try {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: window.location.origin + '/dashboard'
+          redirectTo: window.location.origin + '/dashboard',
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          }
         }
       });
       
@@ -68,7 +89,7 @@ const Index = () => {
     } catch (error: any) {
       console.error("Google auth error:", error);
       toast.error(error.message || "Google authentication failed");
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -93,17 +114,33 @@ const Index = () => {
         <div className="bg-strive-navy border border-strive-blue/30 rounded-xl p-6 animate-scale-in">
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
-              <div className="space-y-2">
-                <label className="text-sm text-white/70">Name</label>
-                <Input 
-                  type="text" 
-                  placeholder="Your name" 
-                  className="bg-white/5 border-white/10 placeholder:text-white/30 text-white"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required={!isLogin}
-                />
-              </div>
+              <>
+                <div className="space-y-2">
+                  <label className="text-sm text-white/70">Name</label>
+                  <Input 
+                    type="text" 
+                    placeholder="Your name" 
+                    className="bg-white/5 border-white/10 placeholder:text-white/30 text-white"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required={!isLogin}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <label className="text-sm text-white/70">Role</label>
+                  <select
+                    className="w-full h-10 rounded-md border border-white/10 bg-white/5 px-3 py-2 text-white appearance-none"
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    required={!isLogin}
+                  >
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
+              </>
             )}
             
             <div className="space-y-2">
@@ -133,10 +170,13 @@ const Index = () => {
             <Button 
               type="submit" 
               className="w-full bg-strive-blue hover:bg-strive-blue/90 text-white flex items-center gap-2"
-              disabled={loading}
+              disabled={isSubmitting}
             >
               <LogIn className="h-4 w-4" />
               {isLogin ? "Log In" : "Sign Up"}
+              {isSubmitting && (
+                <span className="ml-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+              )}
             </Button>
           </form>
           
@@ -145,7 +185,7 @@ const Index = () => {
               variant="outline" 
               className="w-full border-white/10 text-white hover:bg-white/5 flex items-center justify-center gap-2"
               onClick={handleGoogleSignIn}
-              disabled={loading}
+              disabled={isSubmitting}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
@@ -167,6 +207,9 @@ const Index = () => {
                 <path d="M1 1h22v22H1z" fill="none" />
               </svg>
               Continue with Google
+              {isSubmitting && (
+                <span className="ml-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+              )}
             </Button>
           </div>
           
@@ -175,6 +218,7 @@ const Index = () => {
               type="button"
               className="text-strive-blue hover:text-strive-blue/80 text-sm"
               onClick={() => setIsLogin(!isLogin)}
+              disabled={isSubmitting}
             >
               {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}
             </button>
