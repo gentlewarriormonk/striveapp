@@ -1,6 +1,4 @@
-
 import { NavLink } from "react-router-dom";
-import StriveLogo from "@/assets/strive-logo.png";
 import { BookOpen, Home, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -15,7 +13,7 @@ export const NavBar = () => {
         <div className="flex items-center">
           <NavLink to="/" className="mr-8">
             <img 
-              src={StriveLogo} 
+              src="/lovable-uploads/10f90f85-cda7-45d8-bb62-7a7636aa8bd8.png" 
               alt="Strive Logo" 
               className="h-10 w-auto" 
             />
