@@ -1,3 +1,4 @@
+
 import { StriveLogo } from "@/assets/strive-logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +22,9 @@ const Index = () => {
           <StriveLogo size="lg" />
         </div>
         
+        <h1 className="text-4xl font-bold text-center text-white mb-3 tracking-tight">
+          Welcome to Strive
+        </h1>
         <p className="text-white/70 text-center mb-8">
           Sign up or log in to track your habits and improve your productivity
         </p>

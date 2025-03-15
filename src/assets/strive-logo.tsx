@@ -20,11 +20,13 @@ export const StriveLogo = ({
 
   return (
     <div className={cn("flex items-center", className)}>
-      <img 
-        src="/lovable-uploads/2bb76d87-cf5d-4b84-ba7e-4df4dc33f55d.png" 
-        alt="Strive Logo" 
-        className={cn(getSizeClass(), "w-auto")}
-      />
+      <div className={cn("relative", getSizeClass())}>
+        <img 
+          src="/lovable-uploads/2bb76d87-cf5d-4b84-ba7e-4df4dc33f55d.png" 
+          alt="Strive Logo" 
+          className="h-full w-auto"
+        />
+      </div>
     </div>
   );
 };
