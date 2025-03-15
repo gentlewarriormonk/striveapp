@@ -17,7 +17,7 @@ export const TaskItem = ({
 }: TaskItemProps) => {
   return (
     <div 
-      className="glass-card p-5 mb-4 cursor-pointer transition-all duration-300 hover:bg-white/10"
+      className="bg-strive-navy border border-strive-blue/30 rounded-xl p-5 mb-4 cursor-pointer transition-all duration-300 hover:bg-[#0f1520]"
       onClick={onClick}
     >
       <div className="flex items-center gap-4">

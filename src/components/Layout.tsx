@@ -18,7 +18,7 @@ export const Layout = ({ children, className }: LayoutProps) => {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-strive-navy flex flex-col">
+    <div className="min-h-screen bg-[#050a14] flex flex-col">
       <NavBar />
       <main className={cn("flex-1 container px-4 py-6 mx-auto max-w-7xl animate-fade-in", className)}>
         {children}

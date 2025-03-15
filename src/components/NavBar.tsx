@@ -1,7 +1,7 @@
 
 import { NavLink } from "react-router-dom";
 import { StriveLogo } from "@/assets/strive-logo";
-import { BookOpen, Home, PlusCircle, Settings, User } from "lucide-react";
+import { BookOpen, Home, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
@@ -21,8 +21,8 @@ export const NavBar = () => {
             <NavLink 
               to="/dashboard" 
               className={({ isActive }) => cn(
-                "nav-item",
-                isActive && "active"
+                "flex items-center gap-2 px-4 py-2 rounded-md text-white/80 hover:text-white",
+                isActive && "bg-[#1a2236] text-strive-blue"
               )}
             >
               <Home size={18} />
@@ -32,8 +32,8 @@ export const NavBar = () => {
             <NavLink 
               to="/habits" 
               className={({ isActive }) => cn(
-                "nav-item",
-                isActive && "active"
+                "flex items-center gap-2 px-4 py-2 rounded-md text-white/80 hover:text-white",
+                isActive && "bg-[#1a2236] text-strive-blue"
               )}
             >
               <User size={18} />
@@ -43,8 +43,8 @@ export const NavBar = () => {
             <NavLink 
               to="/tasks" 
               className={({ isActive }) => cn(
-                "nav-item",
-                isActive && "active"
+                "flex items-center gap-2 px-4 py-2 rounded-md text-white/80 hover:text-white",
+                isActive && "bg-[#1a2236] text-strive-blue"
               )}
             >
               <BookOpen size={18} />
@@ -60,7 +60,8 @@ export const NavBar = () => {
                 <Settings className="h-5 w-5 text-white/70 hover:text-white" />
               </Button>
               
-              <Button variant="outline" className="hidden md:flex text-white border-white/20 hover:bg-white/5">
+              <Button variant="outline" className="hidden md:flex items-center gap-2 text-white border-white/20 hover:bg-white/5">
+                <LogOut className="h-4 w-4" />
                 Log Out
               </Button>
             </>

@@ -15,7 +15,7 @@ const Chip = React.forwardRef<HTMLDivElement, ChipProps>(
         className={cn(
           "inline-flex items-center rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2",
           {
-            "bg-strive-blue/20 text-strive-blue": variant === "primary",
+            "bg-[#1a2236] text-strive-blue": variant === "primary",
             "bg-white/10 text-white": variant === "default",
             "bg-secondary text-secondary-foreground": variant === "secondary",
             "border border-input bg-background hover:bg-accent hover:text-accent-foreground":

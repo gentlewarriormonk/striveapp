@@ -26,14 +26,14 @@ export const HabitItem = ({
   streak,
 }: HabitItemProps) => {
   return (
-    <div className="w-full glass-card p-6 mb-4 transition-all duration-300 hover:shadow-lg">
+    <div className="w-full bg-strive-navy rounded-xl border border-strive-blue/30 p-6 mb-4 transition-all duration-300">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <div className="flex items-center mb-2">
             <h3 className="text-xl font-semibold text-white">{name}</h3>
-            <Chip className="ml-3" variant="primary">
+            <div className="ml-3 bg-[#1a2236] text-strive-blue px-3 py-1 rounded-full text-sm">
               {category}
-            </Chip>
+            </div>
           </div>
           <p className="text-white/70 text-sm">{description}</p>
         </div>
@@ -44,9 +44,11 @@ export const HabitItem = ({
               <div
                 key={index}
                 className={cn(
-                  "day-circle",
-                  day.completed ? "completed" : "empty",
-                  day.isToday && "today"
+                  "w-10 h-10 rounded-full flex items-center justify-center",
+                  day.completed 
+                    ? "bg-strive-blue text-white" 
+                    : "border-2 border-dashed border-white/20",
+                  day.isToday && !day.completed && "border-2 border-strive-blue border-dashed"
                 )}
               >
                 {day.completed ? (

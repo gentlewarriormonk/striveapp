@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Info } from "lucide-react";
+import { Info, LogIn } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-strive-navy p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#050a14] p-4">
       <div className="w-full max-w-md mx-auto">
         <div className="flex justify-center mb-8">
           <StriveLogo size="lg" />
@@ -29,7 +29,7 @@ const Index = () => {
           Sign up or log in to track your habits and improve your productivity
         </p>
         
-        <div className="glass-card p-6 animate-scale-in">
+        <div className="bg-strive-navy border border-strive-blue/30 rounded-xl p-6 animate-scale-in">
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (
               <div className="space-y-2">
@@ -62,8 +62,9 @@ const Index = () => {
             
             <Button 
               type="submit" 
-              className="w-full bg-strive-blue hover:bg-strive-blue/90 text-white"
+              className="w-full bg-strive-blue hover:bg-strive-blue/90 text-white flex items-center gap-2"
             >
+              <LogIn className="h-4 w-4" />
               {isLogin ? "Log In" : "Sign Up"}
             </Button>
           </form>
@@ -107,7 +108,7 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="flex items-center mt-8 p-4 glass-card">
+        <div className="flex items-center mt-8 p-4 bg-strive-navy border border-strive-blue/30 rounded-xl">
           <Info className="text-strive-blue h-5 w-5 mr-3 flex-shrink-0" />
           <p className="text-sm text-white/70">
             This is a development version of Strive. You can log in with any email/password or use Google Sign-In.
