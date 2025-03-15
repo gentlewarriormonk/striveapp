@@ -19,8 +19,9 @@ const Index = () => {
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#050a14] p-4">
       <div className="w-full max-w-md mx-auto">
         <div className="flex justify-center mb-8">
-          <StriveLogo size="lg" />
+          <img src={striveLogo} alt="Strive Logo" className="h-12 w-auto" />
         </div>
+
         
         <h1 className="text-4xl font-bold text-center text-white mb-3 tracking-tight">
           Welcome to Strive
