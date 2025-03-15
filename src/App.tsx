@@ -14,12 +14,24 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 
-const queryClient = new QueryClient();
+// Create a new QueryClient instance to clear any cached data
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      staleTime: 0,
+    },
+  },
+});
 
 const App = () => {
   // Force dark mode
   useEffect(() => {
     document.documentElement.classList.add('dark');
+    
+    // Log to verify routing
+    console.log('App initialized with current path:', window.location.pathname);
   }, []);
 
   return (

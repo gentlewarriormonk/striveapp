@@ -20,5 +20,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  base: '/',
+  base: '/', // This ensures all assets are loaded with a root-relative path
 }));
