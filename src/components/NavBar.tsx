@@ -1,13 +1,18 @@
 
 import { NavLink } from "react-router-dom";
-import StriveLogo from "@/assets/strive-logo.png";
 import { BookOpen, Home, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useLocation } from "react-router-dom";
+import { useTheme } from "@/components/theme-provider";
 
 export const NavBar = () => {
   const location = useLocation();
+  const { theme } = useTheme();
+  
+  const logoSrc = theme === "dark"
+    ? "/lovable-uploads/strive logo white on transparent.png"
+    : "/lovable-uploads/Strive full colour with padding.png";
   
   return (
     <header className="w-full bg-strive-deep-navy border-b border-white/5">
@@ -15,7 +20,7 @@ export const NavBar = () => {
         <div className="flex items-center">
           <NavLink to="/" className="mr-8">
             <img 
-              src={StriveLogo} 
+              src={logoSrc} 
               alt="Strive Logo" 
               className="h-10 w-auto" 
             />
