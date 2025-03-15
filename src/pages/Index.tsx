@@ -104,9 +104,7 @@ const Index = () => {
         <h1 className="font-bold text-center text-white mb-3 tracking-tight text-3xl">
           Welcome to Strive
         </h1>
-        <p className="text-white/70 text-center mb-8">
-          Sign up or log in to track your habits and improve your productivity
-        </p>
+        <p className="text-white/70 text-center mb-8 font-thin">Sign up or log in to track your tasks and start to strive.</p>
         
         <div className="bg-strive-navy border border-strive-blue/30 rounded-xl p-6 animate-scale-in">
           <form onSubmit={handleSubmit} className="space-y-4">
