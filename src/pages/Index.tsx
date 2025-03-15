@@ -1,16 +1,75 @@
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Info, LogIn } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Index = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/dashboard");
+    setLoading(true);
+    
+    try {
+      if (isLogin) {
+        // Login with email and password
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+        
+        if (error) throw error;
+        console.log("Logged in:", data);
+        navigate("/dashboard");
+      } else {
+        // Sign up with email and password
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              name
+            }
+          }
+        });
+        
+        if (error) throw error;
+        toast.success("Sign up successful! Please check your email for verification.");
+      }
+    } catch (error: any) {
+      console.error("Authentication error:", error);
+      toast.error(error.message || "Authentication failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin + '/dashboard'
+        }
+      });
+      
+      if (error) throw error;
+      // The redirect is handled by Supabase, so we don't need to do anything here
+    } catch (error: any) {
+      console.error("Google auth error:", error);
+      toast.error(error.message || "Google authentication failed");
+      setLoading(false);
+    }
   };
 
   return (
@@ -40,6 +99,9 @@ const Index = () => {
                   type="text" 
                   placeholder="Your name" 
                   className="bg-white/5 border-white/10 placeholder:text-white/30 text-white"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required={!isLogin}
                 />
               </div>
             )}
@@ -50,6 +112,9 @@ const Index = () => {
                 type="email" 
                 placeholder="your.email@example.com" 
                 className="bg-white/5 border-white/10 placeholder:text-white/30 text-white"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
             </div>
             
@@ -59,12 +124,16 @@ const Index = () => {
                 type="password" 
                 placeholder="••••••••" 
                 className="bg-white/5 border-white/10 placeholder:text-white/30 text-white"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
             </div>
             
             <Button 
               type="submit" 
               className="w-full bg-strive-blue hover:bg-strive-blue/90 text-white flex items-center gap-2"
+              disabled={loading}
             >
               <LogIn className="h-4 w-4" />
               {isLogin ? "Log In" : "Sign Up"}
@@ -75,6 +144,8 @@ const Index = () => {
             <Button 
               variant="outline" 
               className="w-full border-white/10 text-white hover:bg-white/5 flex items-center justify-center gap-2"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
                 <path
