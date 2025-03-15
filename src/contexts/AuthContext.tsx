@@ -1,4 +1,3 @@
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { Session, User } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
@@ -21,10 +20,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   // Function to refresh user data
-  const refreshUser = async () => {
+  const refreshUser = async (): Promise<void> => {
     const { data: { user } } = await supabase.auth.getUser();
     setUser(user);
-    return user;
   };
 
   useEffect(() => {
