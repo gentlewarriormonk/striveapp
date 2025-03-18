@@ -1,4 +1,3 @@
-
 import { NavLink, useNavigate } from "react-router-dom";
 import { BookOpen, Home, LogOut, PlusCircle, Settings, User } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,9 +13,10 @@ export const NavBar = () => {
   const { signOut, user } = useAuth();
   const navigate = useNavigate();
   
+  // Use relative paths for images
   const logoSrc = theme === "dark"
-    ? "/lovable-uploads/strive logo white on transparent.png"
-    : "/lovable-uploads/Strive full colour with padding.png";
+    ? "./lovable-uploads/strive logo white on transparent.png"
+    : "./lovable-uploads/Strive full colour with padding.png";
   
   const handleLogout = async () => {
     await signOut();
