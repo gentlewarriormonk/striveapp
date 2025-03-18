@@ -1,6 +1,8 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import Index from "./pages/Index";
@@ -12,6 +14,17 @@ import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 
+// Create a new QueryClient instance with default options
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      staleTime: 0,
+    },
+  },
+});
+
 const App = () => {
   // Force dark mode and add a version key to bust cache
   useEffect(() => {
@@ -22,7 +35,7 @@ const App = () => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <TooltipProvider>
           <Toaster />
@@ -63,7 +76,7 @@ const App = () => {
           </Routes>
         </TooltipProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 

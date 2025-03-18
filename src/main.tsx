@@ -13,7 +13,7 @@ console.log("App version:", appVersion);
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ThemeProvider defaultTheme="dark">
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <App key={appVersion} />
       </BrowserRouter>
     </ThemeProvider>
